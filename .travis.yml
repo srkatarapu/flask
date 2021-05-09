@@ -1,16 +1,35 @@
 sudo : required
+language: python
 services:
   - docker
+before_script: pip install docker-compose
+script:
+  # since there's a dependency on mongo, it will build that image also
+  # although we have not added any tests scenario
+  - docker-compose run service-2 sh -c "pytest"
+after_success:
+  - if [[ "$TRAVIS_BRANCH" == "main" ]]; then
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - docker-compose build 
+  - docker tag service-1 $DOCKER_ID/flask-service1-aws 
+  - docker tag service-2 $DOCKER_ID/flask-service2-aws 
+  - docker tag mongo $DOCKER_ID/flask-mongo-aws 
+  - docker tag nginx $DOCKER_ID/flask-nginx-aws 
+  - docker push $DOCKER_ID/flask-service1-aws
+  - docker push $DOCKER_ID/flask-service2-aws 
+  - docker push $DOCKER_ID/flask-mongo-aws 
+  - docker push $DOCKER_ID/flask-nginx-aws 
+fi
 
-language: generic
-deploy:
-  provider: elasticbeanstalk
-  region: us-east-2
-  app: flask-app
-  env: FlaskApp-env-1
-  bucket-name: elasticbeanstalk-us-east-2-126562325494
-  bucket-path: flask-app
-  on:
-    branch: aws_deployment
-  access_key_id: $AWS_ACCESS_KEY
-  secret_access_key: $AWS_SECRET_KEY
+
+  deploy:
+    provider: elasticbeanstalk
+    region: us-west-2
+    app: flask-app
+    env: FlaskApp-env
+    bucket_name: elasticbeanstalk-ap-south-1-679022722124
+    bucket_path: flask-app
+    on:
+        branch: main
+    access_key_id: $AWS_ACCESS_KEY
+    secret_acces_key: $AWS_SECRET_KEY
