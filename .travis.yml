@@ -1,14 +1,16 @@
 sudo : required
-language: python
+
 services:
   - docker
+  
 before_script: pip install docker-compose
+
 script:
   # since there's a dependency on mongo, it will build that image also
   # although we have not added any tests scenario
   - docker-compose run service-2 sh -c "pytest"
+  
 after_success:
-  - if [[ "$TRAVIS_BRANCH" == "main" ]]; then
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   - docker-compose build 
   - docker tag service-1 $DOCKER_ID/flask-service1-aws 
@@ -19,8 +21,6 @@ after_success:
   - docker push $DOCKER_ID/flask-service2-aws 
   - docker push $DOCKER_ID/flask-mongo-aws 
   - docker push $DOCKER_ID/flask-nginx-aws 
-fi
-
 
   deploy:
     provider: elasticbeanstalk
