@@ -1,14 +1,8 @@
 sudo : required
-
 services:
-
   - docker
-  
 before_script: 
-
   - pip install docker-compose
-
-  
 after_success:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   - docker-compose build 
@@ -16,7 +10,6 @@ after_success:
   - docker push srinivask61/flask-service2-aws 
   - docker push srinivask61/flask-mongo-aws 
   - docker push srinivask61/flask-nginx-aws 
-
  deploy:
     provider: elasticbeanstalk
     region: us-west-2
