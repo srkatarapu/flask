@@ -15,6 +15,7 @@ after_success:
     - docker push srinivask61/flask-mongo
   
     - docker push srinivask61/flask-nginx
+    
  deploy:
     provider: elasticbeanstalk
     region: us-west-2
