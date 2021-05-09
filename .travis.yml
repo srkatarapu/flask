@@ -1,23 +1,27 @@
 sudo : required
 services:
-  - docker
+    - docker
 before_script: 
-  - pip install docker-compose
+    - pip install docker-compose
 after_success:
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
-  - docker-compose build 
-  - docker push srinivask61/flask-service1-aws
-  - docker push srinivask61/flask-service2-aws 
-  - docker push srinivask61/flask-mongo-aws 
-  - docker push srinivask61/flask-nginx-aws 
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  
+    - docker-compose build 
+  
+    - docker push srinivask61/flask-service1-aws
+  
+    - docker push srinivask61/flask-service2-aws
+  
+    - docker push srinivask61/flask-mongo-aws
+  
+    - docker push srinivask61/flask-nginx-aws
  deploy:
     provider: elasticbeanstalk
     region: us-west-2
     app: flask-app
     env: FlaskApp-env
     bucket_name: elasticbeanstalk-us-west-2-533316587000
-    bucket_path: flask-app
     on:
-      branch: main
-    AWS_ACCESS_KEY: $AWS_ACCESS_KEY
-    AWS_SECRET_KEY: $AWS_SECRET_KEY
+        branch: main
+    access_key_id: $AWS_ACCESS_KEY
+    secret_acces_key: $AWS_SECRET_KEY
