@@ -3,7 +3,8 @@ sudo : required
 services:
   - docker
   
-before_script: pip install docker-compose
+before_script: 
+  -pip install docker-compose
 
 script:
   # since there's a dependency on mongo, it will build that image also
