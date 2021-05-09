@@ -15,10 +15,6 @@ script:
 after_success:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   - docker-compose build 
-  - docker tag service-1 srinivask61/flask-service1-aws 
-  - docker tag service-2 srinivask61flask-service2-aws 
-  - docker tag mongo srinivask61/flask-mongo-aws 
-  - docker tag nginx srinivask61/flask-nginx-aws 
   - docker push srinivask61/flask-service1-aws
   - docker push srinivask61/flask-service2-aws 
   - docker push srinivask61/flask-mongo-aws 
