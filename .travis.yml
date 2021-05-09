@@ -27,7 +27,7 @@ fi
     region: us-west-2
     app: flask-app
     env: FlaskApp-env
-    bucket_name: elasticbeanstalk-ap-south-1-679022722124
+    bucket_name: elasticbeanstalk-us-west-2-533316587000
     bucket_path: flask-app
     on:
         branch: main
