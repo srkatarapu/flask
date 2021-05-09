@@ -8,9 +8,6 @@ before_script:
 
   - pip install docker-compose
 
-script:
-
-  - docker-compose run service-2 sh -c "pytest"
   
 after_success:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
