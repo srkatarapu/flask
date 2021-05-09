@@ -18,14 +18,14 @@ after_success:
 
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   - docker-compose build 
-  - docker tag service-1 $DOCKER_ID/flask-service1-aws 
-  - docker tag service-2 $DOCKER_ID/flask-service2-aws 
-  - docker tag mongo $DOCKER_ID/flask-mongo-aws 
-  - docker tag nginx $DOCKER_ID/flask-nginx-aws 
-  - docker push $DOCKER_ID/flask-service1-aws
-  - docker push $DOCKER_ID/flask-service2-aws 
-  - docker push $DOCKER_ID/flask-mongo-aws 
-  - docker push $DOCKER_ID/flask-nginx-aws 
+  - docker tag service-1 srinivask61/flask-service1-aws 
+  - docker tag service-2 srinivask61flask-service2-aws 
+  - docker tag mongo srinivask61/flask-mongo-aws 
+  - docker tag nginx srinivask61/flask-nginx-aws 
+  - docker push srinivask61/flask-service1-aws
+  - docker push srinivask61/flask-service2-aws 
+  - docker push srinivask61/flask-mongo-aws 
+  - docker push srinivask61/flask-nginx-aws 
 
   deploy:
     provider: elasticbeanstalk
