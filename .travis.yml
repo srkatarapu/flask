@@ -1,9 +1,14 @@
 sudo : required
+
 services:
     - docker
+    
 before_script: 
+
     - pip install docker-compose
+    
 after_success:
+
     - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   
     - docker-compose build 
