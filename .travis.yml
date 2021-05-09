@@ -9,13 +9,9 @@ before_script:
   - pip install docker-compose
 
 script:
-
-  # since there's a dependency on mongo, it will build that image also
-  # although we have not added any tests scenario
   - docker-compose run service-2 sh -c "pytest"
   
 after_success:
-
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   - docker-compose build 
   - docker tag service-1 srinivask61/flask-service1-aws 
@@ -27,7 +23,7 @@ after_success:
   - docker push srinivask61/flask-mongo-aws 
   - docker push srinivask61/flask-nginx-aws 
 
-  deploy:
+ deploy:
     provider: elasticbeanstalk
     region: us-west-2
     app: flask-app
@@ -35,6 +31,6 @@ after_success:
     bucket_name: elasticbeanstalk-us-west-2-533316587000
     bucket_path: flask-app
     on:
-        branch: main
+      branch: main
     access_key_id: $AWS_ACCESS_KEY
     secret_acces_key: $AWS_SECRET_KEY
